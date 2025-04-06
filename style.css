@@ -280,6 +280,90 @@ textarea {
     margin: 0 auto;
 }
 
+/* Reports */
+.reports-container {
+    display: flex;
+    gap: 30px;
+}
+
+.reports-list {
+    flex: 1;
+}
+
+.report-preview {
+    flex: 2;
+}
+
+.list-container {
+    background-color: var(--gray-light);
+    border-radius: 6px;
+    padding: 15px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.report-item {
+    background-color: white;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.report-item:hover, .report-item.active {
+    background-color: var(--primary-dark);
+    color: white;
+}
+
+.report-item .report-date {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.report-item .report-info {
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.report-item:hover .report-info, .report-item.active .report-info {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pdf-container {
+    background-color: var(--gray-light);
+    border-radius: 6px;
+    padding: 20px;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+#pdf-canvas {
+    max-width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#no-reports-message {
+    text-align: center;
+    color: var(--gray);
+    padding: 20px;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.pagination-controls button {
+    padding: 8px 15px;
+}
+
 /* Activity Management */
 .activity-manager {
     background-color: var(--gray-light);
@@ -356,5 +440,9 @@ tbody tr:hover {
     
     .activity-points {
         margin-top: 10px;
+    }
+    
+    .reports-container {
+        flex-direction: column;
     }
 } 

@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -17,6 +18,7 @@
                 <ul class="tabs">
                     <li class="active" data-tab="track">Track Activities</li>
                     <li data-tab="stats">Statistics</li>
+                    <li data-tab="reports">Reports</li>
                     <li data-tab="manage">Manage Activities</li>
                 </ul>
             </nav>
@@ -73,6 +75,25 @@
                         <canvas id="activity-chart"></canvas>
                     </div>
                     <button id="generate-pdf" class="btn secondary">Generate PDF Report</button>
+                </div>
+            </section>
+            
+            <section id="reports" class="tab-content">
+                <h2>Saved Reports</h2>
+                <div class="reports-container">
+                    <div class="reports-list">
+                        <h3>Available Reports</h3>
+                        <div id="reports-list-container" class="list-container">
+                            <!-- Reports will be populated from JavaScript -->
+                            <p id="no-reports-message">No saved reports found.</p>
+                        </div>
+                    </div>
+                    <div class="report-preview">
+                        <h3>Report Preview</h3>
+                        <div id="pdf-viewer" class="pdf-container">
+                            <canvas id="pdf-canvas"></canvas>
+                        </div>
+                    </div>
                 </div>
             </section>
 
