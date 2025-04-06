@@ -7,7 +7,8 @@ A simple web application for tracking daily productivity by recording activities
 - Track daily activities with comments
 - View progress towards daily productivity goals
 - Generate statistics and charts for any day
-- Export reports as PDF
+- Save and view reports in the application
+- Export reports as PDF to a dedicated 'raporty' folder
 - Add custom activity types with defined difficulty levels
 
 ## Usage
@@ -16,7 +17,8 @@ A simple web application for tracking daily productivity by recording activities
 2. Select an activity type from the dropdown, add a comment (optional), and click "Add Activity".
 3. View your progress on the progress bar at the top.
 4. Switch to the "Statistics" tab to view charts and generate PDF reports.
-5. Use the "Manage Activities" tab to add new types of activities or delete existing ones.
+5. Access all your saved reports in the "Reports" tab - view them directly in the app.
+6. Use the "Manage Activities" tab to add new types of activities or delete existing ones.
 
 ## Productivity Metrics
 
@@ -46,8 +48,13 @@ A simple web application for tracking daily productivity by recording activities
 - CSS3
 - JavaScript
 - Chart.js for data visualization
+- PDF.js for viewing PDF reports in the app
 - html2canvas and jsPDF for PDF generation
 
 ## Data Storage
 
-The application uses browser localStorage to save your activities and daily records. Data persists between sessions unless you clear your browser data. 
+The application uses browser localStorage to save your activities, daily records, and reports. Data persists between sessions unless you clear your browser data.
+
+PDF reports are saved in two places:
+1. In the "raporty" folder in the application directory
+2. In the browser's localStorage for in-app viewing 
