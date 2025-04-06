@@ -331,20 +331,35 @@ textarea {
     color: rgba(255, 255, 255, 0.8);
 }
 
+.loading-indicator {
+    padding: 20px;
+    text-align: center;
+    color: var(--primary);
+    font-weight: 500;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .pdf-container {
     background-color: var(--gray-light);
     border-radius: 6px;
-    padding: 20px;
+    padding: 30px;
     height: 500px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: auto;
+    position: relative;
 }
 
 #pdf-canvas {
     max-width: 100%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background: white;
+    display: block;
+    margin: 0 auto;
 }
 
 #no-reports-message {
@@ -356,12 +371,29 @@ textarea {
 .pagination-controls {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
-    gap: 10px;
+    align-items: center;
+    margin-top: 15px;
+    gap: 15px;
+    width: 100%;
+    padding: 10px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .pagination-controls button {
     padding: 8px 15px;
+    min-width: 100px;
+}
+
+.pagination-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-info {
+    font-weight: 500;
+    color: var(--primary-dark);
 }
 
 /* Activity Management */

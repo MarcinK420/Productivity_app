@@ -591,6 +591,25 @@ function loadPdf(reportId) {
     // Reset page number
     currentPage = 1;
     
+    // Show loading indicator
+    pdfCanvas.style.display = 'none';
+    const pdfViewer = document.getElementById('pdf-viewer');
+    
+    // Remove any existing pagination controls
+    const existingControls = pdfViewer.querySelector('.pagination-controls');
+    if (existingControls) {
+        pdfViewer.removeChild(existingControls);
+    }
+    
+    // Add loading indicator
+    let loadingIndicator = pdfViewer.querySelector('.loading-indicator');
+    if (!loadingIndicator) {
+        loadingIndicator = document.createElement('div');
+        loadingIndicator.className = 'loading-indicator';
+        loadingIndicator.textContent = 'Loading PDF...';
+        pdfViewer.appendChild(loadingIndicator);
+    }
+    
     // Convert base64 to array buffer
     const raw = window.atob(pdfData.split(',')[1]);
     const rawLength = raw.length;
@@ -605,6 +624,14 @@ function loadPdf(reportId) {
         currentPdfDoc = pdfDoc;
         totalPages = pdfDoc.numPages;
         
+        // Remove loading indicator
+        if (loadingIndicator) {
+            pdfViewer.removeChild(loadingIndicator);
+        }
+        
+        // Display canvas
+        pdfCanvas.style.display = 'block';
+        
         // Render the first page
         renderPage(currentPage);
         
@@ -615,6 +642,11 @@ function loadPdf(reportId) {
     }).catch(error => {
         console.error('Error loading PDF:', error);
         alert('Error loading PDF: ' + error.message);
+        
+        // Remove loading indicator
+        if (loadingIndicator) {
+            pdfViewer.removeChild(loadingIndicator);
+        }
     });
 }
 
@@ -626,14 +658,23 @@ function renderPage(pageNumber) {
         const canvas = pdfCanvas;
         const ctx = canvas.getContext('2d');
         
-        // Scale to fit within the container
+        // Scale to fit within the container while preserving aspect ratio
         const viewport = page.getViewport({ scale: 1.0 });
         const containerWidth = pdfCanvas.parentElement.clientWidth - 40; // 40px for padding
-        const scale = containerWidth / viewport.width;
+        const containerHeight = pdfCanvas.parentElement.clientHeight - 40; // 40px for padding
+        
+        // Calculate scale based on both width and height constraints
+        const scaleWidth = containerWidth / viewport.width;
+        const scaleHeight = containerHeight / viewport.height;
+        const scale = Math.min(scaleWidth, scaleHeight) * 0.95; // Add a small margin
+        
         const scaledViewport = page.getViewport({ scale: scale });
         
         canvas.width = scaledViewport.width;
         canvas.height = scaledViewport.height;
+        
+        // Clear previous content
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         const renderContext = {
             canvasContext: ctx,
@@ -648,38 +689,65 @@ function renderPage(pageNumber) {
 
 // Add pagination controls if the PDF has multiple pages
 function addPaginationControls() {
+    // Remove existing pagination controls first
+    const pdfViewer = document.getElementById('pdf-viewer');
     let paginationControls = document.querySelector('.pagination-controls');
     
-    // Create pagination controls if they don't exist
-    if (!paginationControls) {
-        paginationControls = document.createElement('div');
-        paginationControls.className = 'pagination-controls';
-        
-        const prevButton = document.createElement('button');
-        prevButton.className = 'btn secondary';
-        prevButton.textContent = 'Previous';
-        prevButton.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderPage(currentPage);
-            }
-        });
-        
-        const nextButton = document.createElement('button');
-        nextButton.className = 'btn secondary';
-        nextButton.textContent = 'Next';
-        nextButton.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderPage(currentPage);
-            }
-        });
-        
-        paginationControls.appendChild(prevButton);
-        paginationControls.appendChild(nextButton);
-        
-        document.getElementById('pdf-viewer').appendChild(paginationControls);
+    if (paginationControls) {
+        pdfViewer.removeChild(paginationControls);
     }
+    
+    // Create pagination controls
+    paginationControls = document.createElement('div');
+    paginationControls.className = 'pagination-controls';
+    
+    const prevButton = document.createElement('button');
+    prevButton.className = 'btn secondary';
+    prevButton.textContent = 'Previous';
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            renderPage(currentPage);
+            updatePaginationControls();
+        }
+    });
+    
+    const pageInfo = document.createElement('span');
+    pageInfo.className = 'page-info';
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+    
+    const nextButton = document.createElement('button');
+    nextButton.className = 'btn secondary';
+    nextButton.textContent = 'Next';
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+            currentPage++;
+            renderPage(currentPage);
+            updatePaginationControls();
+        }
+    });
+    
+    paginationControls.appendChild(prevButton);
+    paginationControls.appendChild(pageInfo);
+    paginationControls.appendChild(nextButton);
+    
+    pdfViewer.appendChild(paginationControls);
+}
+
+// Update pagination controls
+function updatePaginationControls() {
+    const paginationControls = document.querySelector('.pagination-controls');
+    if (!paginationControls) return;
+    
+    const prevButton = paginationControls.querySelector('button:first-child');
+    const nextButton = paginationControls.querySelector('button:last-child');
+    const pageInfo = paginationControls.querySelector('.page-info');
+    
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages;
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
 }
 
 // Delete a saved report
