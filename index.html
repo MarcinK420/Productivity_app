@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Productivity Tracker</h1>
+            <nav>
+                <ul class="tabs">
+                    <li class="active" data-tab="track">Track Activities</li>
+                    <li data-tab="stats">Statistics</li>
+                    <li data-tab="manage">Manage Activities</li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="track" class="tab-content active">
+                <h2>Track Your Activities</h2>
+                <div class="activity-form">
+                    <div class="form-group">
+                        <label for="activity-select">Select Activity:</label>
+                        <select id="activity-select">
+                            <!-- Activities will be populated from JavaScript -->
+                        </select>
+                        <span class="difficulty-badge" id="difficulty-badge">Difficulty: <span id="difficulty-level">-</span></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="activity-comment">Comment:</label>
+                        <textarea id="activity-comment" placeholder="Describe your activity..."></textarea>
+                    </div>
+                    <button id="add-activity" class="btn primary">Add Activity</button>
+                </div>
+
+                <div class="daily-summary">
+                    <h3>Today's Activities</h3>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" id="daily-progress"></div>
+                        </div>
+                        <div class="progress-label">
+                            <span id="points-label">0 points</span>
+                        </div>
+                    </div>
+                    <ul id="activity-list" class="activity-list">
+                        <!-- Activities will be added here -->
+                    </ul>
+                </div>
+            </section>
+
+            <section id="stats" class="tab-content">
+                <h2>Your Statistics</h2>
+                <div class="date-selector">
+                    <label for="stats-date">Select Date:</label>
+                    <input type="date" id="stats-date">
+                    <button id="generate-stats" class="btn primary">Generate Statistics</button>
+                </div>
+                <div id="stats-container" class="stats-container">
+                    <div class="day-summary">
+                        <h3 id="stats-date-display">Today's Summary</h3>
+                        <p id="productivity-status"></p>
+                        <div id="activities-summary"></div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="activity-chart"></canvas>
+                    </div>
+                    <button id="generate-pdf" class="btn secondary">Generate PDF Report</button>
+                </div>
+            </section>
+
+            <section id="manage" class="tab-content">
+                <h2>Manage Activities</h2>
+                <div class="activity-manager">
+                    <div class="form-group">
+                        <label for="new-activity-name">Activity Name:</label>
+                        <input type="text" id="new-activity-name" placeholder="Enter activity name">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-activity-difficulty">Difficulty Level (1-5):</label>
+                        <input type="range" id="new-activity-difficulty" min="1" max="5" value="3">
+                        <span id="new-difficulty-display">3</span>
+                    </div>
+                    <button id="save-activity" class="btn primary">Save Activity</button>
+                </div>
+                <div class="existing-activities">
+                    <h3>Existing Activities</h3>
+                    <table id="activities-table">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Difficulty</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activities-table-body">
+                            <!-- Activities will be populated from JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
