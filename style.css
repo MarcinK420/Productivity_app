@@ -1,13 +1,18 @@
 :root {
-    --primary: #4a6fa5;
+    --primary: #4a6fa5;       /* Blue */
     --primary-dark: #3d5c8a;
-    --secondary: #ff9f43;
-    --light: #f5f7fa;
-    --dark: #2e3a59;
+    --secondary: #ff9f43;     /* Orange */
+    --light: #fdf6e3;         /* Cream background */
+    --dark: #2e3a59;         /* Dark text */
     --danger: #ee5253;
     --success: #10ac84;
     --gray: #9eacc0;
     --gray-light: #dfe4ea;
+    --grid-border: #4a6fa5;   /* Blue grid lines */
+    --grid-header-bg: #b0c4de; /* Light steel blue header */
+    --grid-habit-bg: #e0eefa;  /* Lighter blue for habit column */
+    --grid-alt-row-bg: #ffe4e1; /* Misty rose for alternating rows */
+    --grid-mark-bg: #4a6fa5;   /* Blue for marked cell */
 }
 
 * {
@@ -37,6 +42,8 @@ h1 {
     color: var(--primary);
     text-align: center;
     margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 h2 {
@@ -181,6 +188,10 @@ textarea {
     margin-top: 30px;
 }
 
+#export-json {
+    margin-top: 20px;
+}
+
 .progress-container {
     margin-bottom: 20px;
 }
@@ -243,157 +254,90 @@ textarea {
     font-weight: 500;
 }
 
-/* Statistics */
-.date-selector {
+/* Habit Tracking Grid */
+.habit-grid-controls {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
+    gap: 15px;
+    margin-bottom: 25px;
+    background-color: var(--gray-light);
+    padding: 15px;
+    border-radius: 6px;
 }
 
-.date-selector label {
+.habit-grid-controls label {
     margin-bottom: 0;
     white-space: nowrap;
+    font-weight: bold;
 }
 
-.date-selector input {
+.habit-grid-controls select {
     width: auto;
+    min-width: 120px;
 }
 
-.stats-container {
-    background-color: var(--gray-light);
-    padding: 20px;
-    border-radius: 6px;
+.habit-grid-container {
+    overflow-x: auto; /* Allow horizontal scrolling for the grid */
 }
 
-.day-summary {
-    margin-bottom: 30px;
-}
-
-.chart-container {
-    height: 300px;
-    margin-bottom: 30px;
-}
-
-#generate-pdf {
-    display: block;
-    margin: 0 auto;
-}
-
-/* Reports */
-.reports-container {
-    display: flex;
-    gap: 30px;
-}
-
-.reports-list {
-    flex: 1;
-}
-
-.report-preview {
-    flex: 2;
-}
-
-.list-container {
-    background-color: var(--gray-light);
-    border-radius: 6px;
-    padding: 15px;
-    max-height: 500px;
-    overflow-y: auto;
-}
-
-.report-item {
-    background-color: white;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    padding: 12px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
-
-.report-item:hover, .report-item.active {
-    background-color: var(--primary-dark);
-    color: white;
-}
-
-.report-item .report-date {
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.report-item .report-info {
+.habit-grid {
+    border-collapse: collapse;
+    width: 100%;
     font-size: 14px;
-    color: var(--gray);
+    border: 2px solid var(--grid-border);
+    table-layout: auto; /* Allow table to adjust column width based on content */
 }
 
-.report-item:hover .report-info, .report-item.active .report-info {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.loading-indicator {
-    padding: 20px;
+.habit-grid th,
+.habit-grid td {
+    border: 1px solid var(--grid-border);
     text-align: center;
-    color: var(--primary);
-    font-weight: 500;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.pdf-container {
-    background-color: var(--gray-light);
-    border-radius: 6px;
-    padding: 30px;
-    height: 500px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: auto;
+    padding: 8px 4px;
+    height: 35px; /* Set fixed height */
     position: relative;
 }
 
-#pdf-canvas {
-    max-width: 100%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    background: white;
-    display: block;
-    margin: 0 auto;
+.habit-grid th {
+    background-color: var(--grid-header-bg);
+    font-weight: bold;
+    min-width: 35px; /* Give day headers a slight minimum width */
 }
 
-#no-reports-message {
+.habit-grid th.day-letter {
+    font-size: 12px;
+    color: var(--dark);
+    height: auto;
+    padding: 4px;
+}
+
+.habit-grid td.habit-name-cell {
+    background-color: var(--grid-habit-bg);
+    text-align: left;
+    padding-left: 10px;
+    font-weight: 600;
+    width: 15%; /* Suggest a relative width instead */
+    white-space: normal; /* Allow wrapping */
+    vertical-align: middle; /* Align text vertically */
+}
+
+/* Alternating row colors like the image */
+.habit-grid tr:nth-child(odd) td:not(.habit-name-cell) {
+    background-color: white;
+}
+
+.habit-grid tr:nth-child(even) td:not(.habit-name-cell) {
+    background-color: var(--grid-alt-row-bg);
+}
+
+.habit-grid td.marked {
+    background-color: var(--grid-mark-bg) !important; /* Use important to override alternating row color */
+}
+
+.habit-grid .no-data {
     text-align: center;
-    color: var(--gray);
     padding: 20px;
-}
-
-.pagination-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-    gap: 15px;
-    width: 100%;
-    padding: 10px;
-    background: white;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.pagination-controls button {
-    padding: 8px 15px;
-    min-width: 100px;
-}
-
-.pagination-controls button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.page-info {
-    font-weight: 500;
-    color: var(--primary-dark);
+    color: var(--gray);
+    font-style: italic;
 }
 
 /* Activity Management */
@@ -420,23 +364,25 @@ textarea {
     font-weight: bold;
 }
 
-table {
+table#activities-table {
+    /* Ensure specificity if needed */
     width: 100%;
     border-collapse: collapse;
 }
 
-th, td {
+table#activities-table th,
+table#activities-table td {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid var(--gray-light);
 }
 
-th {
+table#activities-table th {
     background-color: var(--primary);
     color: white;
 }
 
-tbody tr:hover {
+table#activities-table tbody tr:hover {
     background-color: var(--gray-light);
 }
 
@@ -460,11 +406,6 @@ tbody tr:hover {
         padding: 15px;
     }
     
-    .date-selector {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    
     .activity-list li {
         flex-direction: column;
         align-items: flex-start;
@@ -474,7 +415,21 @@ tbody tr:hover {
         margin-top: 10px;
     }
     
-    .reports-container {
+    .habit-grid-controls {
         flex-direction: column;
+        align-items: stretch;
+    }
+
+    .habit-grid th,
+    .habit-grid td {
+        min-width: 25px;
+        height: 25px;
+        font-size: 12px;
+        padding: 4px 2px;
+    }
+    
+    .habit-grid td.habit-name-cell {
+        min-width: 100px;
+        font-size: 13px;
     }
 } 

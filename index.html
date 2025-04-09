@@ -3,22 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productivity Tracker</title>
+    <title>Productivity & Habit Tracker</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <!-- Removed Chart.js, jsPDF, html2canvas, pdf.js dependencies -->
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Productivity Tracker</h1>
+            <h1>Productivity & Habit Tracker</h1>
             <nav>
                 <ul class="tabs">
                     <li class="active" data-tab="track">Track Activities</li>
-                    <li data-tab="stats">Statistics</li>
-                    <li data-tab="reports">Reports</li>
+                    <li data-tab="habits">Habit Tracking</li>
                     <li data-tab="manage">Manage Activities</li>
                 </ul>
             </nav>
@@ -55,45 +51,26 @@
                     <ul id="activity-list" class="activity-list">
                         <!-- Activities will be added here -->
                     </ul>
+                    <button id="export-json" class="btn secondary">Export All Data (Backup)</button>
                 </div>
             </section>
 
-            <section id="stats" class="tab-content">
-                <h2>Your Statistics</h2>
-                <div class="date-selector">
-                    <label for="stats-date">Select Date:</label>
-                    <input type="date" id="stats-date">
-                    <button id="generate-stats" class="btn primary">Generate Statistics</button>
+            <section id="habits" class="tab-content">
+                <h2>Monthly Habit Grid</h2>
+                <div class="habit-grid-controls">
+                    <label for="month-select">Month:</label>
+                    <select id="month-select">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                    <label for="year-select">Year:</label>
+                    <select id="year-select">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                    <button id="update-grid-btn" class="btn primary">Show Grid</button>
                 </div>
-                <div id="stats-container" class="stats-container">
-                    <div class="day-summary">
-                        <h3 id="stats-date-display">Today's Summary</h3>
-                        <p id="productivity-status"></p>
-                        <div id="activities-summary"></div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="activity-chart"></canvas>
-                    </div>
-                    <button id="generate-pdf" class="btn secondary">Generate PDF Report</button>
-                </div>
-            </section>
-            
-            <section id="reports" class="tab-content">
-                <h2>Saved Reports</h2>
-                <div class="reports-container">
-                    <div class="reports-list">
-                        <h3>Available Reports</h3>
-                        <div id="reports-list-container" class="list-container">
-                            <!-- Reports will be populated from JavaScript -->
-                            <p id="no-reports-message">No saved reports found.</p>
-                        </div>
-                    </div>
-                    <div class="report-preview">
-                        <h3>Report Preview</h3>
-                        <div id="pdf-viewer" class="pdf-container">
-                            <canvas id="pdf-canvas"></canvas>
-                        </div>
-                    </div>
+                <div id="habit-grid-container" class="habit-grid-container">
+                    <!-- Grid will be generated here -->
+                    <p class="no-data">Select a month and year to view the grid.</p>
                 </div>
             </section>
 

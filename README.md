@@ -1,28 +1,33 @@
-# Productivity Tracker
+# Productivity & Habit Tracker
 
-A simple web application for tracking daily productivity by recording activities and their difficulty levels.
+A simple web application for tracking daily productivity and visualizing habit consistency.
 
 ## Features
 
-- Track daily activities with comments
-- View progress towards daily productivity goals
-- Generate statistics and charts for any day
-- Save and view reports in the application
-- Export reports as PDF to a dedicated 'raporty' folder
-- Add custom activity types with defined difficulty levels
+- Track daily activities with comments and difficulty points.
+- View daily progress towards productivity goals.
+- Manage custom activity types (habits) and their difficulty levels.
+- Visualize monthly habit consistency with a grid view.
+- Export all application data (activity definitions and history) as a JSON backup file.
 
 ## Usage
 
 1. Open `index.html` in your web browser.
-2. Select an activity type from the dropdown, add a comment (optional), and click "Add Activity".
-3. View your progress on the progress bar at the top.
-4. Switch to the "Statistics" tab to view charts and generate PDF reports.
-5. Access all your saved reports in the "Reports" tab - view them directly in the app.
-6. Use the "Manage Activities" tab to add new types of activities or delete existing ones.
+2. **Track Activities Tab:**
+    - Select an activity, add an optional comment, and click "Add Activity".
+    - View today's progress and activity list.
+    - Click "Export All Data (Backup)" to save a complete backup of your habits and history. Save this file securely.
+3. **Habit Tracking Tab:**
+    - Select a month and year.
+    - Click "Show Grid" to view your habit consistency for that period.
+    - Marked cells indicate the habit was performed on that day.
+4. **Manage Activities Tab:**
+    - Add new activity types (habits) with their names and difficulty levels.
+    - Delete existing activity types.
 
 ## Productivity Metrics
 
-- An activity's difficulty level (1-5) determines its point value
+- An activity's difficulty level (1-5) determines its point value.
 - 10 points = Productive day
 - 15 points = Very productive day
 
@@ -47,14 +52,9 @@ A simple web application for tracking daily productivity by recording activities
 - HTML5
 - CSS3
 - JavaScript
-- Chart.js for data visualization
-- PDF.js for viewing PDF reports in the app
-- html2canvas and jsPDF for PDF generation
 
 ## Data Storage
 
-The application uses browser localStorage to save your activities, daily records, and reports. Data persists between sessions unless you clear your browser data.
+The application uses browser `localStorage` to save your defined activities (habits) and the history of performed activities. Data persists between sessions on the same browser unless you clear your browser data.
 
-PDF reports are saved in two places:
-1. In the "raporty" folder in the application directory
-2. In the browser's localStorage for in-app viewing 
+**Backup:** Use the "Export All Data (Backup)" button to create a JSON file containing all your data. This file can be used for backup or potentially for migrating data (import functionality not yet implemented). 
